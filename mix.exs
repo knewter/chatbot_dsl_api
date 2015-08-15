@@ -35,7 +35,7 @@ defmodule ChatbotDslApi.Mixfile do
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 0.6", only: :dev},
      {:cowboy, "~> 1.0"},
-     {:chatbot_dsl_playground, path: "/home/jadams/elixir/chatbot_dsl_playground"}
+     {:chatbot_dsl_playground, github: "knewter/chatbot_dsl_playground"}
    ]
   end
 end
