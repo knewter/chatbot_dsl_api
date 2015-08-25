@@ -6,6 +6,7 @@ defmodule ChatbotDslApi.ChatbotControllerTest do
   @invalid_attrs %{}
 
   setup do
+    ChatbotDslApi.Repo.delete_all(Chatbot)
     conn = conn() |> put_req_header("accept", "application/json")
     {:ok, conn: conn}
   end
