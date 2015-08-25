@@ -2,8 +2,6 @@ defmodule ChatbotDslApi.ChatbotTest do
   use ChatbotDslApi.ModelCase
 
   alias ChatbotDslApi.Chatbot
-  alias ChatbotDslApi.Rule
-  alias ChatbotDslApi.Repo
 
   @json_ast """
   {

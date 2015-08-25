@@ -22,7 +22,8 @@ defmodule ChatbotDslApi.Router do
   # Other scopes may use custom stacks.
   scope "/api", ChatbotDslApi do
     pipe_through :api
-    resources "/rules", RuleController
-    resources "/chatbots", ChatbotController
+    resources "/chatbots", ChatbotController do
+      resources "/rules", RuleController
+    end
   end
 end

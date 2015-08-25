@@ -4,6 +4,7 @@ defmodule ChatbotDslApi.RuleController do
   alias ChatbotDslApi.Rule
 
   plug :scrub_params, "rule" when action in [:create, :update]
+  plug :find_chatbot
 
   def index(conn, _params) do
     rules = Repo.all(Rule)
@@ -11,7 +12,8 @@ defmodule ChatbotDslApi.RuleController do
   end
 
   def create(conn, %{"rule" => rule_params}) do
-    changeset = Rule.changeset(%Rule{}, rule_params)
+    new_rule = build(conn.assigns.chatbot, :rules)
+    changeset = Rule.changeset(new_rule, rule_params)
 
     case Repo.insert(changeset) do
       {:ok, rule} ->
@@ -26,7 +28,7 @@ defmodule ChatbotDslApi.RuleController do
   end
 
   def show(conn, %{"id" => id}) do
-    rule = Repo.get!(Rule, id)
+    rule = Repo.get!(assoc(conn.assigns.chatbot, :rules), id)
     render conn, "show.json", rule: rule
   end
 
@@ -52,5 +54,10 @@ defmodule ChatbotDslApi.RuleController do
     rule = Repo.delete!(rule)
 
     send_resp(conn, :no_content, "")
+  end
+
+  defp find_chatbot(conn, _) do
+    chatbot = Repo.get(ChatbotDslApi.Chatbot, conn.params["chatbot_id"])
+    assign(conn, :chatbot, chatbot)
   end
 end

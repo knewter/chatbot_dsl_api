@@ -2,10 +2,13 @@ defmodule ChatbotDslApi.ChatbotControllerTest do
   use ChatbotDslApi.ConnCase
 
   alias ChatbotDslApi.Chatbot
+  alias ChatbotDslApi.Rule
+
   @valid_attrs %{name: "some name"}
   @invalid_attrs %{}
 
   setup do
+    ChatbotDslApi.Repo.delete_all(Rule)
     ChatbotDslApi.Repo.delete_all(Chatbot)
     conn = conn() |> put_req_header("accept", "application/json")
     {:ok, conn: conn}
