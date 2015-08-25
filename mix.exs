@@ -36,7 +36,7 @@ defmodule ChatbotDslApi.Mixfile do
      {:phoenix_live_reload, "~> 0.6", only: :dev},
      {:cowboy, "~> 1.0"},
      {:chatbot_dsl_playground, github: "knewter/chatbot_dsl_playground"},
-     {:httpoison, "~> 0.7.2"}
+     {:ex_unit_api_documentation, github: "dantswain/ex_unit_api_documentation"}
    ]
   end
 end
