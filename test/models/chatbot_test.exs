@@ -32,4 +32,11 @@ defmodule ChatbotDslApi.ChatbotTest do
     changeset = Chatbot.changeset(%Chatbot{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  test "starting the underlying ChatbotDSL.Chatbot for our model" do
+    chatbot = Repo.insert!(%Chatbot{name: "gigity"})
+    Chatbot.ensure_started(chatbot)
+    {:ok, name} = Chatbot.registered_name(chatbot)
+    assert is_pid(Process.whereis(name))
+  end
 end

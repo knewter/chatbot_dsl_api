@@ -19,6 +19,26 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :hedwig,
+  clients: [
+    %{
+      jid: "user2@localhost",
+      password: "mypass",
+      nickname: "chatbot",
+      resource: "lappitytoppity",
+      config: %{ # This is only necessary if you need to override the defaults.
+        server: "localhost",
+        port: 5222
+      },
+      rooms: [
+        "general@conference.localhost"
+      ],
+      handlers: [
+        {ChatbotDSL.Handler, %{}}
+      ]
+    }
+  ]
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env}.exs"

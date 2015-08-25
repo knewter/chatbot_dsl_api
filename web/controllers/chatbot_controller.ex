@@ -15,6 +15,7 @@ defmodule ChatbotDslApi.ChatbotController do
 
     case Repo.insert(changeset) do
       {:ok, chatbot} ->
+        Chatbot.ensure_started(chatbot)
         conn
         |> put_status(:created)
         |> render("show.json", chatbot: chatbot)
@@ -36,6 +37,7 @@ defmodule ChatbotDslApi.ChatbotController do
 
     case Repo.update(changeset) do
       {:ok, chatbot} ->
+        Chatbot.ensure_started(chatbot)
         render(conn, "show.json", chatbot: chatbot)
       {:error, changeset} ->
         conn

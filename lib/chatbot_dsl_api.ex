@@ -15,6 +15,11 @@ defmodule ChatbotDslApi do
       # worker(ChatbotDslApi.Worker, [arg1, arg2, arg3]),
     ]
 
+    # FIXME: This is really not the right way to do this but yolo, intentional
+    # race condition!  To be clear, this exists so that the Repo will already
+    # be started by the time we start the chatbots
+    :timer.apply_after(5_000, ChatbotDslApi, :start_chatbots, [])
+
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: ChatbotDslApi.Supervisor]
@@ -26,5 +31,10 @@ defmodule ChatbotDslApi do
   def config_change(changed, _new, removed) do
     ChatbotDslApi.Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  def start_chatbots() do
+    ChatbotDslApi.Repo.all(ChatbotDslApi.Chatbot)
+    |> Enum.map(&ChatbotDslApi.Chatbot.ensure_started/1)
   end
 end
