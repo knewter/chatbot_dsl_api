@@ -18,7 +18,7 @@ defmodule ChatbotDslApi.Mixfile do
   def application do
     [mod: {ChatbotDslApi, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex]]
+                    :phoenix_ecto, :postgrex, :httpoison]]
   end
 
   # Specifies which paths to compile per environment
@@ -35,7 +35,8 @@ defmodule ChatbotDslApi.Mixfile do
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 0.6", only: :dev},
      {:cowboy, "~> 1.0"},
-     {:chatbot_dsl_playground, github: "knewter/chatbot_dsl_playground"}
+     {:chatbot_dsl_playground, github: "knewter/chatbot_dsl_playground"},
+     {:httpoison, "~> 0.7.2"}
    ]
   end
 end
