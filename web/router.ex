@@ -23,5 +23,6 @@ defmodule ChatbotDslApi.Router do
   scope "/api", ChatbotDslApi do
     pipe_through :api
     resources "/rules", RuleController
+    resources "/chatbots", ChatbotController
   end
 end

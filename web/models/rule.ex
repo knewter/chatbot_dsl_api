@@ -5,6 +5,7 @@ defmodule ChatbotDslApi.Rule do
 
   schema "rules" do
     field :ast, :string
+    belongs_to :chatbot, ChatbotDslApi.Chatbot
 
     timestamps
   end
