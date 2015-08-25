@@ -2,6 +2,7 @@ defmodule ChatbotDslApi.RuleController do
   use ChatbotDslApi.Web, :controller
 
   alias ChatbotDslApi.Rule
+  alias ChatbotDslApi.Chatbot
 
   plug :scrub_params, "rule" when action in [:create, :update]
   plug :find_chatbot
@@ -17,6 +18,7 @@ defmodule ChatbotDslApi.RuleController do
 
     case Repo.insert(changeset) do
       {:ok, rule} ->
+        Chatbot.ensure_started(conn.assigns.chatbot)
         conn
         |> put_status(:created)
         |> render("show.json", rule: rule)
@@ -38,6 +40,7 @@ defmodule ChatbotDslApi.RuleController do
 
     case Repo.update(changeset) do
       {:ok, rule} ->
+        Chatbot.ensure_started(conn.assigns.chatbot)
         render(conn, "show.json", rule: rule)
       {:error, changeset} ->
         conn

@@ -22,13 +22,20 @@ defmodule ChatbotDslApi.Integration.RulesTest do
     {:ok, chatbot_id: chatbot_id}
   end
 
-  test "POST /api/rules returns HTTP 201", %{chatbot_id: chatbot_id} do
+  test "POST /api/chatbots/:chatbot_id/rules returns HTTP 201", %{chatbot_id: chatbot_id} do
     response = APICall.post!("/chatbots/#{chatbot_id}/rules", %{rule: %{ast: "1 + 1"}})
     assert response.status_code == 201
   end
 
-  test "invalid input in POST /api/rules returns HTTP 422", %{chatbot_id: chatbot_id} do
+  test "invalid input in POST /api/chatbots/:chatbot_id/rules returns HTTP 422", %{chatbot_id: chatbot_id} do
     response = APICall.post!("/chatbots/#{chatbot_id}/rules", %{rule: %{ast: ""}})
     assert response.status_code == 422
+  end
+
+  test "PUT /api/chatbots/:chatbot_id/rules/:id returns HTTP 200", %{chatbot_id: chatbot_id} do
+    post_response = APICall.post!("/chatbots/#{chatbot_id}/rules", %{rule: %{ast: "1+1"}})
+    rule_id = post_response.body.data.id
+    response = APICall.put!("/chatbots/#{chatbot_id}/rules/#{rule_id}", %{rule: %{id: rule_id, ast: "1+2"}})
+    assert response.status_code == 200
   end
 end

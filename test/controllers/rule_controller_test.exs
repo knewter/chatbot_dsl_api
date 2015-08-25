@@ -26,7 +26,8 @@ defmodule ChatbotDslApi.RuleControllerTest do
     rule = Repo.insert!(changeset)
     conn = get conn, chatbot_rule_path(conn, :show, chatbot, rule)
     assert json_response(conn, 200)["data"] == %{
-      "id" => rule.id
+      "id" => rule.id,
+      "ast" => "1 + 2"
     }
   end
 

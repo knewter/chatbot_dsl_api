@@ -10,6 +10,6 @@ defmodule ChatbotDslApi.RuleView do
   end
 
   def render("rule.json", %{rule: rule}) do
-    %{id: rule.id}
+    %{id: rule.id, ast: rule.ast}
   end
 end
