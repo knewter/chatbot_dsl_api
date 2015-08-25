@@ -1,5 +1,6 @@
 defmodule ChatbotDslApi.Chatbot do
   use ChatbotDslApi.Web, :model
+  alias ChatbotDslApi.Repo
 
   schema "chatbots" do
     field :name, :string
@@ -44,12 +45,14 @@ defmodule ChatbotDslApi.Chatbot do
   def registered_name(%__MODULE__{id: id}), do: {:ok, :"chatbot_#{id}"}
 
   def state(chatbot) do
+    chatbot = Repo.preload(chatbot, :rules)
     %ChatbotDSL.Chatbot.State{
-      rules: [
+      rules: Enum.map(chatbot.rules, fn(rule) ->
         fn(%ChatbotDSL.Message{body: body}) ->
-          ChatbotDSL.Compiler.compile(@tableflip_ast).(body)
-        end,
-      ]
+          ast = ChatbotDSL.JsonAstConverter.convert(rule.ast)
+          ChatbotDSL.Compiler.compile(ast).(body)
+        end
+      end)
     }
   end
 

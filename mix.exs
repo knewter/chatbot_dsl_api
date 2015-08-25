@@ -35,9 +35,10 @@ defmodule ChatbotDslApi.Mixfile do
      {:phoenix_html, "~> 2.1"},
      {:phoenix_live_reload, "~> 0.6", only: :dev},
      {:cowboy, "~> 1.0"},
-     #{:chatbot_dsl_playground, github: "knewter/chatbot_dsl_playground"},
-     {:chatbot_dsl_playground, path: "/home/jadams/projects/chatbot_dsl/chatbot_dsl_playground"},
-     {:ex_unit_api_documentation, github: "dantswain/ex_unit_api_documentation"}
+     {:chatbot_dsl_playground, github: "knewter/chatbot_dsl_playground"},
+     #{:chatbot_dsl_playground, path: "/home/jadams/projects/chatbot_dsl/chatbot_dsl_playground"},
+     {:ex_unit_api_documentation, github: "dantswain/ex_unit_api_documentation"},
+     {:cors_plug, "~> 0.1.3"},
    ]
   end
 end

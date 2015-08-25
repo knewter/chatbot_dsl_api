@@ -1,5 +1,24 @@
 defmodule ChatbotDslApi do
   use Application
+  alias ChatbotDslApi.Repo
+  alias ChatbotDslApi.Chatbot
+  alias ChatbotDslApi.Rule
+
+  @json_tableflip_ast """
+  {
+    "type": "if",
+    "arguments": [
+      {
+        "type": "contains",
+        "arguments": [
+          {"type": "var", "arguments": [{"type": "atom", "arguments": ["input"]}]},
+          {"type": "string", "arguments": [":tableflip:"]}
+        ]
+      },
+      {"type": "response", "arguments": ["(╯°□°）╯︵ ┻━┻"]}
+    ]
+  }
+  """
 
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
@@ -10,7 +29,7 @@ defmodule ChatbotDslApi do
       # Start the endpoint when the application starts
       supervisor(ChatbotDslApi.Endpoint, []),
       # Start the Ecto repository
-      worker(ChatbotDslApi.Repo, []),
+      worker(Repo, []),
       # Here you could define other workers and supervisors as children
       # worker(ChatbotDslApi.Worker, [arg1, arg2, arg3]),
     ]
@@ -34,7 +53,17 @@ defmodule ChatbotDslApi do
   end
 
   def start_chatbots() do
-    ChatbotDslApi.Repo.all(ChatbotDslApi.Chatbot)
-    |> Enum.map(&ChatbotDslApi.Chatbot.ensure_started/1)
+    create_initial_chatbots()
+    Repo.all(Chatbot)
+    |> Enum.map(&Chatbot.ensure_started/1)
+  end
+
+  def create_initial_chatbots do
+    # This is just a little dummy function to get us some seeds until we're comfy with everything
+    Repo.delete_all(Rule)
+    Repo.delete_all(Chatbot)
+    chatbot = Repo.insert!(%Chatbot{name: "flipparooni"})
+    rule = %Rule{ast: @json_tableflip_ast, chatbot_id: chatbot.id}
+    Repo.insert!(rule)
   end
 end

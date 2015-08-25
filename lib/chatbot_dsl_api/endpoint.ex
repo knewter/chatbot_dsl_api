@@ -35,5 +35,7 @@ defmodule ChatbotDslApi.Endpoint do
     key: "_chatbot_dsl_api_key",
     signing_salt: "NxnmjR0q"
 
+  plug CORSPlug
+
   plug ChatbotDslApi.Router
 end
