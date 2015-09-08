@@ -25,4 +25,10 @@ defmodule ChatbotDslApi.Router do
     resources "/rules", RuleController
     resources "/chatbots", ChatbotController
   end
+
+  scope "/docs", ExUnitApiDocumentation do
+    pipe_through :browser
+
+    get "/", DocsController, :index
+  end
 end

@@ -25,7 +25,7 @@ defmodule ChatbotDslApi.Support.APICall do
 
   # make sure we're posting JSON
   def process_request_headers(headers) do
-    [{'content-type', 'application/json'} | headers]
+    [{"content-type", "application/json"} | headers]
   end
 
   # API url helper - will work in any env
@@ -35,5 +35,11 @@ defmodule ChatbotDslApi.Support.APICall do
     port = Keyword.get(endpoint_config, :http) |> Keyword.get(:port)
 
     "http://#{host}:#{port}/api"
+  end
+
+  def execute_request(method, url, request_headers, body, hn_options) do
+    {:ok, resp} = super(method, url, request_headers, body, hn_options)
+    ExUnitApiDocumentation.document(method, url, request_headers, body, resp)
+    {:ok, resp}
   end
 end

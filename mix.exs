@@ -18,7 +18,8 @@ defmodule ChatbotDslApi.Mixfile do
   def application do
     [mod: {ChatbotDslApi, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger,
-                    :phoenix_ecto, :postgrex, :httpoison]]
+                    :phoenix_ecto, :postgrex, :httpoison,
+                    :ex_unit_api_documentation]]
   end
 
   # Specifies which paths to compile per environment

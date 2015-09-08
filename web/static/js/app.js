@@ -19,3 +19,4 @@ import "deps/phoenix_html/web/static/js/phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 // import socket from "./socket"
+import "deps/ex_unit_api_documentation/web/static/js/docs"

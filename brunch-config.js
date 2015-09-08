@@ -40,7 +40,8 @@ exports.config = {
     // Dependencies and current project directories to watch
     watched: ["deps/phoenix/web/static",
               "deps/phoenix_html/web/static",
-              "web/static", "test/static"],
+              "web/static", "test/static",
+              "deps/ex_unit_api_documentation/web/static"],
 
     // Where to compile files to
     public: "priv/static"
