@@ -8,7 +8,8 @@ defmodule ChatbotDslApi.RuleController do
   plug :find_chatbot
 
   def index(conn, _params) do
-    rules = Repo.all(Rule)
+    rules = from r in Rule, where: r.chatbot_id == ^conn.assigns[:chatbot].id
+            |> Repo.all
     render(conn, "index.json", rules: rules)
   end
 
