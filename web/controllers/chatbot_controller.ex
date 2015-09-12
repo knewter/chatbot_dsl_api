@@ -2,6 +2,7 @@ defmodule ChatbotDslApi.ChatbotController do
   use ChatbotDslApi.Web, :controller
 
   alias ChatbotDslApi.Chatbot
+  alias ChatbotDslApi.Rule
 
   plug :scrub_params, "chatbot" when action in [:create, :update]
 
@@ -49,9 +50,11 @@ defmodule ChatbotDslApi.ChatbotController do
   def delete(conn, %{"id" => id}) do
     chatbot = Repo.get!(Chatbot, id)
 
-    # Here we use delete! (with a bang) because we expect
-    # it to always work (and if it does not, it will raise).
-    chatbot = Repo.delete!(chatbot)
+    # Delete all its rules
+    from(r in Rule, where: r.chatbot_id == ^id)
+    |> Repo.delete_all
+
+    Repo.delete!(chatbot)
 
     send_resp(conn, :no_content, "")
   end
