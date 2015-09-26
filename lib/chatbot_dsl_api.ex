@@ -20,6 +20,22 @@ defmodule ChatbotDslApi do
   }
   """
 
+  @macabre_ast """
+  {
+    "type": "if",
+    "arguments": [
+      {
+        "type": "contains",
+        "arguments": [
+          {"type": "var", "arguments": [{"type": "atom", "arguments": ["input"]}]},
+          {"type": "string", "arguments": ["brb"]}
+        ]
+      },
+      {"type": "response", "arguments": ["unless you die, amirite?"]}
+    ]
+  }
+  """
+
   # See http://elixir-lang.org/docs/stable/elixir/Application.html
   # for more information on OTP Applications
   def start(_type, _args) do
@@ -62,8 +78,11 @@ defmodule ChatbotDslApi do
     # This is just a little dummy function to get us some seeds until we're comfy with everything
     Repo.delete_all(Rule)
     Repo.delete_all(Chatbot)
-    chatbot = Repo.insert!(%Chatbot{name: "flipparooni"})
-    rule = %Rule{ast: @json_tableflip_ast, chatbot_id: chatbot.id}
-    Repo.insert!(rule)
+    chatbot1 = Repo.insert!(%Chatbot{name: "flipparooni"})
+    chatbot2 = Repo.insert!(%Chatbot{name: "macabre"})
+    rule1 = %Rule{ast: @json_tableflip_ast, chatbot_id: chatbot1.id}
+    rule2 = %Rule{ast: @macabre_ast, chatbot_id: chatbot2.id}
+    Repo.insert!(rule1)
+    Repo.insert!(rule2)
   end
 end
