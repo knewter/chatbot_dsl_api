@@ -12,7 +12,7 @@ config :logger, level: :warn
 # Configure your database
 config :chatbot_dsl_api, ChatbotDslApi.Repo,
   adapter: Ecto.Adapters.Postgres,
-  username: "postgres",
-  password: "postgres",
+  username: System.get_env("DATABASE_POSTGRESQL_USERNAME") || "postgres",
+  password: System.get_env("DATABASE_POSTGRESQL_PASSWORD") || "postgres",
   database: "chatbot_dsl_api_test",
   pool: Ecto.Adapters.SQL.Sandbox
