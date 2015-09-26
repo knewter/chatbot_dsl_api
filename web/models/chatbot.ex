@@ -47,9 +47,10 @@ defmodule ChatbotDslApi.Chatbot do
   def state(chatbot) do
     chatbot = Repo.preload(chatbot, :rules)
     %ChatbotDSL.Chatbot.State{
+      name: chatbot.name,
       rules: Enum.map(chatbot.rules, fn(rule) ->
         fn(%ChatbotDSL.Message{body: body}) ->
-          ast = ChatbotDSL.JsonAstConverter.convert(rule.ast)
+          ast = ChatbotDSL.JSONASTConverter.convert(rule.ast)
           ChatbotDSL.Compiler.compile(ast).(body)
         end
       end)

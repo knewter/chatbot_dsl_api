@@ -31,10 +31,10 @@ config :hedwig,
         port: 5222
       },
       rooms: [
-        "general@conference.localhost"
+        "general@muc.localhost"
       ],
       handlers: [
-        {ChatbotDSL.Handler, %{}}
+        {ChatbotDslApi.Handler, %{}}
       ]
     }
   ]
