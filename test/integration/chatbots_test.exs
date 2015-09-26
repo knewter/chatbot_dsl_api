@@ -4,14 +4,7 @@ defmodule ChatbotDslApi.Integration.ChatbotsTest do
   alias ChatbotDslApi.Support.APICall
 
   setup_all do
-    ExUnitApiDocumentation.start_doc("chatbots")
     ChatbotDslApi.Helpers.launch_api
-
-    on_exit fn ->
-      # actually write out the docs
-      ExUnitApiDocumentation.write_json
-    end
-
     :ok
   end
 

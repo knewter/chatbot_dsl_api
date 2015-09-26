@@ -7,17 +7,11 @@ defmodule ChatbotDslApi.Integration.RulesTest do
   alias ChatbotDslApi.Rule
 
   setup_all do
-    ExUnitApiDocumentation.start_doc("rules")
     ChatbotDslApi.Helpers.launch_api
     Repo.delete_all(Rule)
     Repo.delete_all(Chatbot)
     chatbot_response = APICall.post!("/chatbots", %{chatbot: %{name: "foo"}})
     chatbot_id = chatbot_response.body.data.id
-
-    on_exit fn ->
-      # actually write out the docs
-      ExUnitApiDocumentation.write_json
-    end
 
     {:ok, chatbot_id: chatbot_id}
   end
