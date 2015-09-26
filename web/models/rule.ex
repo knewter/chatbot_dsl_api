@@ -1,6 +1,6 @@
 defmodule ChatbotDslApi.Rule do
   use ChatbotDslApi.Web, :model
-  alias ChatbotDSL.JsonAstConverter
+  alias ChatbotDSL.JSONASTConverter
   alias ChatbotDSL.Compiler
 
   schema "rules" do
@@ -26,7 +26,7 @@ defmodule ChatbotDslApi.Rule do
 
   def compile(rule) do
     rule.ast
-    |> JsonAstConverter.convert
+    |> JSONASTConverter.convert
     |> Compiler.compile
   end
 
