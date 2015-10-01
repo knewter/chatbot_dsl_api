@@ -32,4 +32,12 @@ defmodule ChatbotDslApi.Integration.RulesTest do
     response = APICall.put!("/chatbots/#{chatbot_id}/rules/#{rule_id}", %{rule: %{id: rule_id, ast: "1+2"}})
     assert response.status_code == 200
   end
+
+  test "DELETE /api/chatbots/:chatbot_id/rules/:id returns HTTP 200", %{chatbot_id: chatbot_id} do
+    post_response = APICall.post!("/chatbots/#{chatbot_id}/rules", %{rule: %{ast: "1+1"}})
+    rule_id = post_response.body.data.id
+    response = APICall.delete!("/chatbots/#{chatbot_id}/rules/#{rule_id}")
+    assert response.status_code == 204
+    refute Repo.get(Rule, rule_id)
+  end
 end
